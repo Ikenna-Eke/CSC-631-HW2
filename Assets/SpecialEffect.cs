@@ -4,14 +4,31 @@ using UnityEngine;
 
 public class SpecialEffect : MonoBehaviour
 {
-    [SerializeField] private Material myColor;
+    public  Behaviour h;
+    public bool isOn = false;
+    private CharacterController _charController;
 
-
-    // Update is called once per frame
-   
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    private void Start()
     {
-            Color random = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            myColor.color = random;
+         //Behaviour h = (Behaviour)GetComponent("Halo");
+        _charController = GetComponent<CharacterController>();
+    }
+    
+
+
+
+    void OnControllerColliderHit(ControllerColliderHit hit) {
+        Rigidbody body = hit.collider.attachedRigidbody;
+        if (body != null && !body.isKinematic) {
+            if(isOn==false){
+                h.enabled =true;
+                isOn=true;
+            }
+            else{
+                h.enabled =false;;
+                isOn=false;
+            }
+        }
     }
 }
+

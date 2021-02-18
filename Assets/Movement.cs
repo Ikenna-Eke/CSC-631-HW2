@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
 {
     public float speed = 9.0f;
     public float gravity = -9.8f;
-
+    public float pushForce = 3.0f;
     private CharacterController _charController;
 
     private void Start()
@@ -29,5 +29,13 @@ public class Movement : MonoBehaviour
         _charController.Move(movement);
          
 
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit) {
+        Rigidbody body = hit.collider.attachedRigidbody;
+
+        if (body != null && !body.isKinematic) {
+            body.velocity = hit.moveDirection * pushForce;
+        }
     }
 }
